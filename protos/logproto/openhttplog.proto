@@ -1,0 +1,65 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "LogService";
+
+import "timestamp.proto";
+
+package GrpcOpenHttpLogPkg;
+
+message GrpcDecimal {
+
+    // Whole units part of the amount
+    int64 units = 1;
+
+    // Nano units of the amount (10^-9)
+    // Must be same sign as units
+    sfixed32 nanos = 2;
+}
+
+message GrpcOpenHttpLogObject {
+    int64 ID = 1;
+    string PartnerID = 2;
+    string InterfaceName = 3;
+    
+    google.protobuf.Timestamp OperationTime = 4;
+    string ActionTypes = 5;   
+    string ActionGuid = 6;
+    string PushUrl = 7;
+    string OnlyCode = 8;
+    string BodyText = 9;
+    string ErrorMessage = 10;
+    string IP = 11;
+    GrpcDecimal Millisecond = 12;
+    string ComputerName = 13;  
+    string FromIP = 14;
+}
+
+message GrpcOpenHttpLogSel {
+    int64 ID = 1;
+    string PartnerID = 2;
+    string InterfaceName = 3;
+    
+    google.protobuf.Timestamp OperationTime = 4;
+    string ActionTypes = 5;   
+    string ActionGuid = 6;
+    string PushUrl = 7;
+    string OnlyCode = 8;
+    string BodyText = 9;
+    string ErrorMessage = 10;
+    string IP = 11;
+    GrpcDecimal Millisecond = 12;
+    string ComputerName = 13;  
+    string FromIP = 14;
+
+    int32 page =15;
+    int32 pagecount = 16;
+}
+
+message GrpcOpenHttpLogPage {
+    int32 total = 1;
+    repeated GrpcOpenHttpLogObject rows = 2;
+}
+
+service GrpcOpenHttpLogServer {
+    rpc QueryOpenHttpLog(GrpcOpenHttpLogSel) returns (GrpcOpenHttpLogPage);
+}

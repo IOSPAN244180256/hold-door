@@ -1,0 +1,16 @@
+//protoc.exe -I=proto的输入目录 –java_out=java类输出目录 proto的输入目录包括proto文件
+
+protoc --proto_path=E:\Project\go\src\awesomeProject\protos\testproto --go_out=E:\Project\go\src\awesomeProject\protos\testproto  E:\Project\go\src\awesomeProject\protos\testproto\test.proto
+
+protoc --proto_path=E:\Project\go\src\grpctest\proto\test --go_out=E:\Project\go\src\grpctest\proto\test E:\Project\go\src\grpctest\proto\test\test.proto
+
+protoc --plugin=protoc-gen-go=.\protoc-gen-go.exe --proto_path=E:\Project\go\src\grpctest\proto\test --go_out=E:\Project\go\src\grpctest\proto\test E:\Project\go\src\grpctest\proto\test\test.proto
+
+protoc --proto_path=E:\Project\go\src\grpctest\proto\test --go_out=plugins=grpc:E:\Project\go\src\grpctest\proto\test E:\Project\go\src\grpctest\proto\test\test.proto
+
+
+解决timestamp.proto 指定路径
+protoc --proto_path=C:\Users\pan\go\src\github.com\golang\protobuf\ptypes\timestamp --plugin=protoc-gen-go=.\protoc-gen-go.exe --proto_path=E:\Project\go\src\awesomeProject\protos\logproto --go_out=plugins=grpc:E:\Project\go\src\awesomeProject\protos\logproto E:\Project\go\src\awesomeProject\protos\logproto\openhttplog.proto
+
+必须使用go_out=plugins=grpc 否则只生成数据，不生成接口
+protoc --plugin=protoc-gen-go=./protoc-gen-go.exe --proto_path=E:\Project\go\src\awesomeProject\protos\testproto --go_out=plugins=grpc:E:\Project\go\src\awesomeProject\protos\testproto E:\Project\go\src\awesomeProject\protos\testproto\test.proto

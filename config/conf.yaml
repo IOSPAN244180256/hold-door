@@ -1,0 +1,15 @@
+backen_service: #后端服务配置项
+  host: 127.0.0.1:5020
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMTIzIiwiZXhwIjoxNTg5OTgzMzI0LCJpc3MiOiJMb2dTZXJ2ZXIiLCJhdWQiOiJMb2dDbGllbnQifQ.Bzwl7nAelU3fMlrwYSqhGOiOAx4DVMWpQP2Xj4p-tZ0
+redis_setting: #redis配置
+  host:  r-8vb787ab53d8c9c4pd.redis.zhangbei.rds.aliyuncs.com:6379
+  token: Panpanpan123
+  secret: secret
+
+test: #测试嵌套类型解析
+  - one:
+      url: http://test
+      nested: 123
+  - two:
+      url: http://test
+      nested: 123

@@ -1,0 +1,17 @@
+syntax = "proto3";
+package test;
+
+option cc_generic_services = true;
+
+service HelloService {
+    rpc SayHello(HelloRequest) returns (HelloResponse){}
+}
+
+message HelloRequest {
+    string username = 1;
+}
+
+message HelloResponse {
+    string message = 1;
+}
+

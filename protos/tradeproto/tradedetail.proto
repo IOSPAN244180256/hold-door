@@ -1,0 +1,48 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "TradeService";
+
+//import "google/protobuf/timestamp.proto";
+
+package GrpcTradeDetail;
+
+
+message GrpcTradeDetailObject {
+    int64 ID = 1;
+    string Money = 2;
+    string Type = 3;   
+    string PayName = 4;   
+    //google.protobuf.Timestamp TradeDate = 5;
+    string TradeDate = 5;
+    string Balance = 6;
+    string UserID = 7;
+}
+
+message GrpcTradeDetailSel {
+    int64 ID = 1;
+    string Money = 2;
+    string Type = 3;   
+    string PayName = 4;   
+    //google.protobuf.Timestamp TradeDate = 5;
+    string TradeDate = 5;
+    string Balance = 6;
+    string UserID = 7;
+
+    //google.protobuf.Timestamp StartTradeDate = 8;
+    //google.protobuf.Timestamp EndTradeDate = 9;
+
+    string StartTradeDate = 8;
+    string EndTradeDate = 9;
+
+    int32 page =15;
+    int32 pagecount = 16;
+}
+
+message GrpcTradeDetailPage {
+    int32 total = 1;
+    repeated GrpcTradeDetailObject rows = 2;
+}
+
+service GrpcTradeDetailServer {
+    rpc QueryTradeDetail(GrpcTradeDetailSel) returns (GrpcTradeDetailPage);
+}
