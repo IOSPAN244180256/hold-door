@@ -1,10 +1,10 @@
 package log
 
 import (
-	"awesomeProject/protos/logproto"
-	"awesomeProject/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	GrpcOpenHttpLogPkg "hold-door/protos/logproto"
+	"hold-door/utils"
 )
 
 func Queryopenhttplog(ctx *gin.Context) {

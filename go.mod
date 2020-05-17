@@ -1,4 +1,4 @@
-module awesomeProject
+module hold-door
 
 go 1.14
 

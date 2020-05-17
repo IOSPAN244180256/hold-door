@@ -1,10 +1,10 @@
 package trade
 
 import (
-	"awesomeProject/protos/tradeproto"
-	"awesomeProject/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	GrpcTradeDetail "hold-door/protos/tradeproto"
+	"hold-door/utils"
 )
 
 func QueryTradeDetail(ctx *gin.Context) {

@@ -1,9 +1,9 @@
 package sys
 
 import (
-	"awesomeProject/models"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"hold-door/models"
 )
 
 func Login(ctx *gin.Context) {

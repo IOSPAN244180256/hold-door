@@ -1,10 +1,10 @@
 package routers
 
 import (
-	"awesomeProject/controler/log"
-	"awesomeProject/controler/sys"
-	"awesomeProject/controler/trade"
 	"github.com/gin-gonic/gin"
+	"hold-door/controler/log"
+	"hold-door/controler/sys"
+	"hold-door/controler/trade"
 )
 
 func RegisterRouter(router *gin.Engine) {

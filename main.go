@@ -1,8 +1,8 @@
 package main
 
 import (
-	"awesomeProject/middlewares"
-	"awesomeProject/routers"
+	"hold-door/middlewares"
+	"hold-door/routers"
 
 	"github.com/gin-gonic/gin"
 
