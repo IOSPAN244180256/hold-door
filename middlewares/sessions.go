@@ -9,9 +9,9 @@ import (
 )
 
 func RedisSessionStore() redis.Store {
-	address := config.LoadConfig().Get("redis_setting.host")
-	token := config.LoadConfig().Get("redis_setting.token")
-	secret := config.LoadConfig().Get("redis_setting.secret")
+	address := config.GetConfig().Get("redis_setting.host")
+	token := config.GetConfig().Get("redis_setting.token")
+	secret := config.GetConfig().Get("redis_setting.secret")
 
 	store, err := redis.NewStore(2, "tcp", address.(string), token.(string), []byte(secret.(string)))
 	if err != nil {

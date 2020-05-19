@@ -4,7 +4,16 @@ import (
 	"github.com/spf13/viper"
 )
 
-func LoadConfig() *viper.Viper {
+var _config *viper.Viper
+
+func GetConfig() *viper.Viper {
+	if _config == nil {
+		_config = loadConfig()
+	}
+	return _config
+}
+
+func loadConfig() *viper.Viper {
 	config := viper.New()
 
 	config.AddConfigPath("./config/")

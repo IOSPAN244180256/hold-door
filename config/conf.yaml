@@ -5,6 +5,9 @@ redis_setting: #redis配置
   host:  r-8vb787ab53d8c9c4pd.redis.zhangbei.rds.aliyuncs.com:6379
   token: Panpanpan123
   secret: secret
+webHost: #主机监听地址配置
+  host: 0.0.0.0:5030 #listen and serve on 0.0.0.0:5030
+
 
 test: #测试嵌套类型解析
   - one:

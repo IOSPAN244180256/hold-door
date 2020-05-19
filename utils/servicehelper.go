@@ -20,12 +20,13 @@ func (ta *TokenAuthentication) GetRequestMetadata(ctx context.Context, uri ...st
 }
 
 //是否基于TLS认证进行安全传输
-func (a *TokenAuthentication) RequireTransportSecurity() bool {
+func (ta *TokenAuthentication) RequireTransportSecurity() bool {
 	return false
 }
 
 func GrpcConn() *grpc.ClientConn {
-	conn, err := grpc.Dial("127.0.0.1:5020", grpc.WithInsecure())
+	ip := config.GetConfig().Get("backen_service.host")
+	conn, err := grpc.Dial(cast.ToString(ip), grpc.WithInsecure())
 
 	if err != nil {
 		return nil
@@ -43,8 +44,8 @@ func GrpcConnWithJwt() *grpc.ClientConn {
 	//	fmt.Print(value)
 	//}
 
-	ip := config.LoadConfig().Get("backen_service.host")
-	token := config.LoadConfig().Get("backen_service.token")
+	ip := config.GetConfig().Get("backen_service.host")
+	token := config.GetConfig().Get("backen_service.token")
 
 	auth := TokenAuthentication{
 		JwtToken: "bearer " + cast.ToString(token),

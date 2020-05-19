@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"go.uber.org/zap/zapcore"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -19,6 +20,25 @@ func GetZapLogger() *zap.Logger {
 		panic(err)
 	}
 	return logger
+}
+
+func GetDesignZapLogger() *zap.Logger {
+	writeSyncer := getLogWriter()
+	encoder := getEncoder()
+	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
+
+	logger := zap.New(core)
+	return logger
+}
+
+func getEncoder() zapcore.Encoder {
+	return zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())
+}
+
+func getLogWriter() zapcore.WriteSyncer {
+	//如果想要追加写入可以查看我的博客文件操作那一章
+	file, _ := os.Create("./test.log")
+	return zapcore.AddSync(file)
 }
 
 // Ginzap returns a gin.HandlerFunc (middleware) that logs requests using uber-go/zap.

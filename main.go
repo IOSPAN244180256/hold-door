@@ -1,19 +1,32 @@
 package main
 
 import (
+	"hold-door/config"
 	"hold-door/middlewares"
 	"hold-door/routers"
 
-	"github.com/gin-gonic/gin"
+	"time"
 
 	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	router := gin.Default()
 
-	//注册路由之前注册中间件
+	logger := middlewares.GetDesignZapLogger()
 
+	// Add a ginzap middleware, which:
+	//   - Logs all requests, like a combined access and error log.
+	//   - Logs to stdout.
+	//   - RFC3339 with UTC time format.
+	router.Use(middlewares.Ginzap(logger, time.RFC3339, true))
+
+	// Logs all panic to error log
+	//   - stack means whether output the stack info.
+	router.Use(middlewares.RecoveryWithZap(logger, true))
+
+	//注册路由之前注册中间件
 	//注册跨域中间件
 	router.Use(middlewares.Cors())
 	//注册gin session
@@ -23,5 +36,5 @@ func main() {
 	//注册路由
 	routers.RegisterRouter(router)
 
-	router.Run("0.0.0.0:5030") // listen and serve on 0.0.0.0:8080
+	router.Run(config.GetConfig().Get("webHost.host").(string)) // listen and serve on 0.0.0.0:8080
 }
