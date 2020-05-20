@@ -7,6 +7,13 @@ redis_setting: #redis配置
   secret: secret
 webHost: #主机监听地址配置
   host: 0.0.0.0:5030 #listen and serve on 0.0.0.0:5030
+log_setting: #日志配置
+  usefile: #日志是否输出到文件
+    opend：true
+  usekafka: true #whether to write log to kafka
+kafka: #kafka配置
+
+
 
 
 test: #测试嵌套类型解析

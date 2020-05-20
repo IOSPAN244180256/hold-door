@@ -23,7 +23,7 @@ func GetZapLogger() *zap.Logger {
 	return logger
 }
 
-func GetDesignZapLogger() *zap.Logger {
+func GetCustomZapLogger() *zap.Logger {
 	writeSyncer := getLogWriter()
 	encoder := getEncoder()
 	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
@@ -49,7 +49,6 @@ func getLogWriter() zapcore.WriteSyncer {
 		MaxAge:     30,
 		Compress:   false,
 	}
-
 	return zapcore.AddSync(lumberJackLogger)
 }
 
