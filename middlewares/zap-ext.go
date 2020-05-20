@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"go.uber.org/zap/zapcore"
+	"hold-door/config"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -13,6 +13,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+
+	"hold-door/utils"
 )
 
 func GetZapLogger() *zap.Logger {
@@ -24,24 +27,39 @@ func GetZapLogger() *zap.Logger {
 }
 
 func GetCustomZapLogger() *zap.Logger {
-	writeSyncer := getLogWriter()
-	encoder := getEncoder()
-	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
+	var zapCoreSlice []zapcore.Core
+
+	if config.GetConfig().Get("log_setting.usefile").(bool) == true {
+		fileWriteSyncer := getFileWriter()
+		encoder := getLogEncoder()
+		core := zapcore.NewCore(encoder, fileWriteSyncer, zapcore.DebugLevel)
+		zapCoreSlice = append(zapCoreSlice, core)
+	}
+
+	if config.GetConfig().Get("log_setting.usekafka").(bool) == true {
+		kafkaWriteSyncer := getKafkaWriter()
+		encoder := getLogEncoder()
+		core := zapcore.NewCore(encoder, kafkaWriteSyncer, zapcore.DebugLevel)
+		zapCoreSlice = append(zapCoreSlice, core)
+	}
+
+	core := zapcore.NewTee(zapCoreSlice...)
 
 	logger := zap.New(core, zap.AddCaller())
 	return logger
 }
 
-func getEncoder() zapcore.Encoder {
+func getLogEncoder() zapcore.Encoder {
 	encoderConfig := zap.NewProductionEncoderConfig()
 	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	return zapcore.NewJSONEncoder(encoderConfig)
 }
 
-func getLogWriter() zapcore.WriteSyncer {
-	//如果想要追加写入可以查看我的博客文件操作那一章
-	//file, _ := os.Create("./test.log")
+func getFileWriter() zapcore.WriteSyncer {
+	//file, _ := os.Create("./test.log") //file test
+
+	//use lumberjack
 	lumberJackLogger := &lumberjack.Logger{
 		Filename:   "./test.log",
 		MaxSize:    1,
@@ -50,6 +68,15 @@ func getLogWriter() zapcore.WriteSyncer {
 		Compress:   false,
 	}
 	return zapcore.AddSync(lumberJackLogger)
+}
+
+func getKafkaWriter() zapcore.WriteSyncer {
+	kafkaLog, err := utils.NewKafkaLog("log_test")
+	if err != nil {
+		panic(err)
+	}
+
+	return zapcore.AddSync(kafkaLog)
 }
 
 // Ginzap returns a gin.HandlerFunc (middleware) that logs requests using uber-go/zap.

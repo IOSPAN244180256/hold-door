@@ -1,23 +1,31 @@
 package utils
 
+import (
+	"github.com/Shopify/sarama"
+)
+
 var _kafkaLog *kafkaLog = &kafkaLog{producer: nil}
 
 type kafkaLog struct {
-	producer *sarama.SyncProducer
+	producer sarama.SyncProducer
+	topic    string
 }
 
-func (kl *kafkaLog)Write(p []byte) (n int, err error){
-	msg := &sarama.ProducerMessage{}
-	msg.Topic = lk.Topic
-	msg.Value = sarama.ByteEncoder(p)
-	_, _, err = kl.Producer.SendMessage(msg)
+func (kl *kafkaLog) Write(p []byte) (n int, err error) {
+	msg := &sarama.ProducerMessage{
+		Topic: kl.topic,
+		Value: sarama.ByteEncoder(p),
+	}
+	_, _, err = (kl.producer).SendMessage(msg)
 	if err != nil {
 		return
 	}
 	return
 }
 
-func NewKafkaLog() (kl *kafkaLog,err error){
+func NewKafkaLog(topic string) (kl *kafkaLog, err error) {
+	_kafkaLog.topic = topic
+
 	if _kafkaLog.producer == nil {
 
 		// 设置日志输入到Kafka的配置
@@ -30,10 +38,13 @@ func NewKafkaLog() (kl *kafkaLog,err error){
 		config.Producer.Return.Successes = true
 		config.Producer.Return.Errors = true
 
-		_kafkaLog.producer, err := sarama.NewAsyncProducer([]string{"localhost:9092"}, config)
-		return  _kafkaLog,err
+		producer, err := sarama.NewSyncProducer([]string{"localhost:9092"}, config)
+		if err != nil {
+			_kafkaLog.producer = producer
+		}
+		return _kafkaLog, err
 
-	}else{
-		return  _kafkaLog,nil
+	} else {
+		return _kafkaLog, nil
 	}
 }

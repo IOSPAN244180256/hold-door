@@ -3,6 +3,7 @@ module hold-door
 go 1.14
 
 require (
+	github.com/Shopify/sarama v1.26.4
 	github.com/gin-contrib/sessions v0.0.3
 	github.com/gin-gonic/gin v1.6.3
 	github.com/golang/protobuf v1.3.3

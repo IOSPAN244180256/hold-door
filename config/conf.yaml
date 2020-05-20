@@ -1,19 +1,19 @@
-backen_service: #后端服务配置项
+backen_service: #后端服务配置
   host: 127.0.0.1:5020
   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMTIzIiwiZXhwIjoxNTkwMjIyNzc2LCJpc3MiOiJMb2dTZXJ2ZXIiLCJhdWQiOiJMb2dDbGllbnQifQ.bJJYeS5iv9KlhYrTrX4Z2wkXz9Iz02S3lfpcqp1v94c
 redis_setting: #redis配置
-  host:  r-8vb787ab53d8c9c4pd.redis.zhangbei.rds.aliyuncs.com:6379
-  token: Panpanpan123
+  host:  xxxx:6379
+  token: xxxx
   secret: secret
 webHost: #主机监听地址配置
   host: 0.0.0.0:5030 #listen and serve on 0.0.0.0:5030
 log_setting: #日志配置
-  usefile: #日志是否输出到文件
-    opend：true
-  usekafka: true #whether to write log to kafka
+  usefile: true #日志是否输出到文件
+  usekafka: false #日志是否输出到kafka
 kafka: #kafka配置
-
-
+  host:
+    - localhost:9092
+    - localhost:9091
 
 
 test: #测试嵌套类型解析
