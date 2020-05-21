@@ -36,5 +36,13 @@ func main() {
 	//注册路由
 	routers.RegisterRouter(router)
 
+	//嵌套类型的解析方式
+	//ip2:= config.GetConfig().Get("test")
+	//elementsMap := ip2.([]interface{})
+	//for key, value := range elementsMap {
+	//	fmt.Print(key)
+	//	fmt.Print(value)
+	//}
+
 	router.Run(config.GetConfig().Get("web_host.host").(string)) // listen and serve on 0.0.0.0:8080
 }

@@ -36,14 +36,6 @@ func GrpcConn() *grpc.ClientConn {
 }
 
 func GrpcConnWithJwt() *grpc.ClientConn {
-	//嵌套类型的解析方式
-	//ip2:= config.LoadConfig().Get("element")
-	//elementsMap := ip2.([]interface{})
-	//for key, value := range elementsMap {
-	//	fmt.Print(key)
-	//	fmt.Print(value)
-	//}
-
 	ip := config.GetConfig().Get("backen_service.host")
 	token := config.GetConfig().Get("backen_service.token")
 

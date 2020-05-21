@@ -13,8 +13,8 @@ log_setting: #日志配置
   usekafka: false #日志是否输出到kafka
 kafka: #kafka配置
   host:
-    - localhost:9092
-    - localhost:9091
+    - "localhost:9092"
+    - "localhost:9091"
 
 
 test: #测试嵌套类型解析
