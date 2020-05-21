@@ -21,6 +21,6 @@ func RegisterRouter(router *gin.Engine) {
 
 	tradeRouter := router.Group("/trade")
 	{
-		tradeRouter.GET("/QueryTradeDetail", trade.QueryTradeDetail)
+		tradeRouter.GET("/querytradedetail", trade.QueryTradeDetail)
 	}
 }

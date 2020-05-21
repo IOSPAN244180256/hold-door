@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 
 	logger := middlewares.GetCustomZapLogger()
@@ -36,5 +36,5 @@ func main() {
 	//注册路由
 	routers.RegisterRouter(router)
 
-	router.Run(config.GetConfig().Get("webHost.host").(string)) // listen and serve on 0.0.0.0:8080
+	router.Run(config.GetConfig().Get("web_host.host").(string)) // listen and serve on 0.0.0.0:8080
 }

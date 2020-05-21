@@ -12,8 +12,9 @@ func RedisSessionStore() redis.Store {
 	address := config.GetConfig().Get("redis_setting.host")
 	token := config.GetConfig().Get("redis_setting.token")
 	secret := config.GetConfig().Get("redis_setting.secret")
+	db := config.GetConfig().Get("redis_setting.db")
 
-	store, err := redis.NewStore(2, "tcp", address.(string), token.(string), []byte(secret.(string)))
+	store, err := redis.NewStoreWithDB(2, "tcp", address.(string), token.(string), db.(string), []byte(secret.(string)))
 	if err != nil {
 		panic(err)
 	}
@@ -24,15 +25,16 @@ func RedisSessionStore() redis.Store {
 
 func ValidataAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if c.FullPath() == "/sys/login" {
-			c.Next()
-			return
-		}
-		//这一部分可以替换成从session/cookie中获取，
+
 		session := sessions.Default(c)
 		user := session.Get("user")
 
 		if user == nil {
+			if c.FullPath() == "/sys/login" {
+				c.Next()
+				return
+			}
+
 			c.Abort()
 			c.JSON(http.StatusUnauthorized, gin.H{"message": "身份验证失败"})
 			return // return也是可以省略的，执行了abort操作，会内置在中间件defer前，return，写出来也只是解答为什么Abort()之后，还能执行返回JSON数据

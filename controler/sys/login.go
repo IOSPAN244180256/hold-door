@@ -27,7 +27,7 @@ func Login(ctx *gin.Context) {
 	//user := models.User{ UserID: 110120, UerName: loignName}
 
 	session := sessions.Default(ctx)
-	session.Set("user", 1)
+	session.Set("user", loignName)
 	session.Save()
 
 	re.Code = 1

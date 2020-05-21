@@ -2,10 +2,11 @@ backen_service: #后端服务配置
   host: 127.0.0.1:5020
   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMTIzIiwiZXhwIjoxNTkwMjIyNzc2LCJpc3MiOiJMb2dTZXJ2ZXIiLCJhdWQiOiJMb2dDbGllbnQifQ.bJJYeS5iv9KlhYrTrX4Z2wkXz9Iz02S3lfpcqp1v94c
 redis_setting: #redis配置
-  host:  xxxx:6379
+  host: xxx:6379
   token: xxxx
   secret: secret
-webHost: #主机监听地址配置
+  db: "1"
+web_host: #主机监听地址配置
   host: 0.0.0.0:5030 #listen and serve on 0.0.0.0:5030
 log_setting: #日志配置
   usefile: true #日志是否输出到文件
