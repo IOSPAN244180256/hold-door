@@ -9,9 +9,9 @@ import (
 func Login(ctx *gin.Context) {
 	var re models.ReturnModel
 
-	loignName := ctx.PostForm("loginName")
+	username := ctx.PostForm("username")
 	pwd := ctx.PostForm("password")
-	if loignName != "panyuqing" {
+	if username != "panyuqing" {
 		re.Code = 2
 		re.Message = "账号信息错误"
 		ctx.JSON(200, re)
@@ -27,10 +27,11 @@ func Login(ctx *gin.Context) {
 	//user := models.User{ UserID: 110120, UerName: loignName}
 
 	session := sessions.Default(ctx)
-	session.Set("user", loignName)
+	session.Set("user", username)
 	session.Save()
 
 	re.Code = 1
+	re.Data = "13501161788"
 	ctx.JSON(200, re)
 	return
 
