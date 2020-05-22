@@ -1,8 +1,8 @@
 package trade
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"hold-door/middlewares"
 	GrpcTradeDetail "hold-door/protos/tradeproto"
 	"hold-door/utils"
 )
@@ -11,9 +11,11 @@ func QueryTradeDetail(ctx *gin.Context) {
 	conn := utils.GrpcConnWithJwt()
 	defer conn.Close()
 	c := GrpcTradeDetail.NewGrpcTradeDetailServerClient(conn)
-	r, err := c.QueryTradeDetail(ctx, &GrpcTradeDetail.GrpcTradeDetailSel{Page: 1, Pagecount: 1})
+	r, err := c.QueryTradeDetail(ctx, &GrpcTradeDetail.GrpcTradeDetailSel{Page: 1, Pagecount: 10})
 	if err != nil {
-		fmt.Println(err.Error())
+		logger := middlewares.GetCustomZapLogger()
+		logger.Error(err.Error())
+		ctx.JSON(200, "系统开小差了,请重试")
 		return
 	}
 
