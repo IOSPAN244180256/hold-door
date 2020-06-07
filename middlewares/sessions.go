@@ -19,8 +19,8 @@ func RedisSessionStore() redis.Store {
 		panic(err)
 	}
 
+	store.Options(sessions.Options{MaxAge: 60 * 6})
 	return store
-
 }
 
 func ValidataAuth() gin.HandlerFunc {

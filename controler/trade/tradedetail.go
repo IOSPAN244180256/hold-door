@@ -11,7 +11,7 @@ func QueryTradeDetail(ctx *gin.Context) {
 	conn := utils.GrpcConnWithJwt()
 	defer conn.Close()
 	c := GrpcTradeDetail.NewGrpcTradeDetailServerClient(conn)
-	r, err := c.QueryTradeDetail(ctx, &GrpcTradeDetail.GrpcTradeDetailSel{Page: 1, Pagecount: 10})
+	r, err := c.QueryTradeDetail(ctx, &GrpcTradeDetail.GrpcTradeDetailSel{Page: 1, Pagecount: 1000})
 	if err != nil {
 		logger := middlewares.GetCustomZapLogger()
 		logger.Error(err.Error())
