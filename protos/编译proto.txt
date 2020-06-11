@@ -14,3 +14,5 @@ protoc --proto_path=C:\Users\pan\go\src\github.com\golang\protobuf\ptypes\timest
 
 必须使用go_out=plugins=grpc 否则只生成数据，不生成接口
 protoc --plugin=protoc-gen-go=./protoc-gen-go.exe --proto_path=E:\Project\go\src\awesomeProject\protos\testproto --go_out=plugins=grpc:E:\Project\go\src\awesomeProject\protos\testproto E:\Project\go\src\awesomeProject\protos\testproto\test.proto
+
+protoc --plugin=protoc-gen-go=./protoc-gen-go.exe --proto_path=E:\Project\go\src\hold-door\protos\authtoken --proto_path=E:\Project\go\src\hold-door\protos\common --go_out=plugins=grpc:E:\Project\go\src\hold-door\protos\authtoken E:\Project\go\src\hold-door\protos\authtoken\service_authrization.proto E:\Project\go\src\hold-door\protos\common\common_response.proto

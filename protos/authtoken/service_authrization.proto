@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "AuthGrpcService_Proto";
+
+import "common_response.proto";
+
+package service_authrization;
+
+
+message GrpcRequestToken {
+    string AppSecret = 1;
+    string ServiceSecret = 2;   
+}
+
+message GrpcTokenInfo {
+    string Token = 1;
+    string expires = 2;   
+}
+
+message GrpcResponseToken{
+    service_authrization.Result result = 1;
+    GrpcTokenInfo               data = 2;
+
+}
+
+service ServiceAuthrizationGrpcServer {
+    rpc RequestToken(GrpcRequestToken) returns (GrpcResponseToken);
+}

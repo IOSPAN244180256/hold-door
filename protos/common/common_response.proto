@@ -1,0 +1,12 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "AuthGrpcService_Proto";
+
+
+package service_authrization;
+
+
+message Result {
+    int32 Code = 1; 
+    string Error_Message = 2;
+}

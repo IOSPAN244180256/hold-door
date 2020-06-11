@@ -1,9 +1,9 @@
 backen_service: #后端服务配置
   host: 127.0.0.1:5020
-  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMTIzIiwiZXhwIjoxNTkwMjIyNzc2LCJpc3MiOiJMb2dTZXJ2ZXIiLCJhdWQiOiJMb2dDbGllbnQifQ.bJJYeS5iv9KlhYrTrX4Z2wkXz9Iz02S3lfpcqp1v94c
+  token: xxx
 redis_setting: #redis配置
   host: xxx:6379
-  token: xxxx
+  token: xxx
   secret: secret
   db: "1"
 web_host: #主机监听地址配置
@@ -15,6 +15,9 @@ kafka: #kafka配置
   host:
     - "localhost:9092"
     - "localhost:9091"
+app_secret: #需要授权的服务secret，用secret换token
+  - AuthCenter: 11
+  - Trade:11
 
 
 test: #测试嵌套类型解析
