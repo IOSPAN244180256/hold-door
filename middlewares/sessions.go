@@ -19,7 +19,10 @@ func RedisSessionStore() redis.Store {
 		panic(err)
 	}
 
-	store.Options(sessions.Options{MaxAge: 60 * 6})
+	store.Options(sessions.Options{
+		MaxAge: 10000000,
+		Path:   "/",
+	})
 	return store
 }
 

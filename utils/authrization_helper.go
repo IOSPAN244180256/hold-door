@@ -4,6 +4,7 @@ import (
 	"errors"
 	"golang.org/x/net/context"
 	"hold-door/config"
+	"hold-door/models"
 	service_authrization "hold-door/protos/authtoken"
 	"time"
 )
@@ -36,10 +37,10 @@ func (sName ServiceName) MatchToken() (token string) {
 	var serviceSecret string
 	switch sName {
 	case AuthCenter:
-		serviceSecret = config.GetConfig().Get("service_secret.AuthCenter").(string)
+		serviceSecret = config.GetConfig().Get("backen_service.AuthCenter.service_secret").(string)
 		break
 	case Trade:
-		serviceSecret = config.GetConfig().Get("service_secret.Trade").(string)
+		serviceSecret = config.GetConfig().Get("backen_service.Trade.service_secret").(string)
 		break
 	default:
 		return
@@ -57,26 +58,32 @@ func (sName ServiceName) MatchToken() (token string) {
 
 func getServiceToken(appSercret string, serviceSercret string) (tokenInfo, error) {
 	var token tokenInfo
-	conn := GrpcConn()
+	conn, err := GrpcConn(AuthCenter) //请求授权中心获取token
 	defer conn.Close()
-	c := service_authrization.NewServiceAuthrizationGrpcServerClient(conn)
+	if err != nil {
 
-	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(time.Duration(5*time.Second)))
+		return token, err
+	}
+
+	client := service_authrization.NewServiceAuthrizationGrpcServerClient(conn)
+	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(60*time.Second))
 	authInfo := &service_authrization.GrpcRequestToken{AppSecret: appSercret, ServiceSecret: serviceSercret}
 	defer cancel()
 
-	r, err := c.RequestToken(ctx, authInfo)
-	if err != nil {
-		return token, err
+	r, err2 := client.RequestToken(ctx, authInfo)
+	if err2 != nil {
+		return token, err2
 	}
 
 	if r.Result.Code != 1 {
 		return token, errors.New(r.Result.Error_Message)
 	}
 
-	timeTemplate1 := "2006-01-02 15:04:05" //常规类型
-	expire, _ := time.ParseInLocation(timeTemplate1, r.Data.Expires, time.Local)
-	token = tokenInfo{token: r.Data.Token, expires: expire}
+	expire, s := time.ParseInLocation(models.DatetimeTemplate, r.Data.Expires, time.Local)
+	if s != nil {
+		return token, s
+	}
 
+	token = tokenInfo{token: r.Data.Token, expires: expire}
 	return token, nil
 }

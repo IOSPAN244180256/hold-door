@@ -1,13 +1,19 @@
-backen_service: #后端服务配置
-  host: 127.0.0.1:5020
-  token: xxx
-redis_setting: #redis配置
-  host: xxx:6379
-  token: xxx
-  secret: secret
-  db: "1"
 web_host: #主机监听地址配置
   host: 0.0.0.0:5030 #listen and serve on 0.0.0.0:5030
+app_secret: bd9db769-ac58-11ea-9ec0-00163e06d15b #应用的secret
+backen_service: #需要授权的服务secret，用secret换token
+  AuthCenter:
+    host: 127.0.0.1:5010
+    service_secret: 0defddc4-ac59-11ea-9ec0-00163e06d15b
+  Trade:
+    host: 127.0.0.1:5020
+    service_secret: 1628f197-ac59-11ea-9ec0-00163e06d15b
+timeout: 60 #后台服务超时时长设置
+redis_setting: #redis配置
+  host: xxx:6379
+  token: xxxx
+  secret: secret
+  db: "1"
 log_setting: #日志配置
   usefile: true #日志是否输出到文件
   usekafka: false #日志是否输出到kafka
@@ -15,9 +21,6 @@ kafka: #kafka配置
   host:
     - "localhost:9092"
     - "localhost:9091"
-app_secret: #需要授权的服务secret，用secret换token
-  - AuthCenter: 11
-  - Trade:11
 
 
 test: #测试嵌套类型解析
