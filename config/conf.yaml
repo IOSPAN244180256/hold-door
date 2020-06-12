@@ -1,5 +1,6 @@
 web_host: #主机监听地址配置
   host: 0.0.0.0:5030 #listen and serve on 0.0.0.0:5030
+session_expire: 1800 #半小时
 app_secret: bd9db769-ac58-11ea-9ec0-00163e06d15b #应用的secret
 backen_service: #需要授权的服务secret，用secret换token
   AuthCenter:

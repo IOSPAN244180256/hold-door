@@ -29,8 +29,11 @@ func (sName ServiceName) MatchToken() (token string) {
 	}
 
 	if val, ok := tokenMap[sName]; ok {
-		token = val.token
-		return
+		if val.expires.Add(-60 * time.Second).After(time.Now()) {
+			//校验token是否过期
+			token = val.token
+			return
+		}
 	}
 
 	appSercret := config.GetConfig().Get("app_secret").(string)
